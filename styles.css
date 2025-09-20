@@ -1,0 +1,1411 @@
+/* ==========================================================================
+   === FINÁLNÍ CSS KÓD (styles.css) ===
+   ========================================================================== */
+
+/* CSS Custom Properties for easier maintenance */
+:root {
+    --color-primary: #111;
+    --color-secondary: #222;
+    --color-accent: #8a51ed;
+    --color-background: #fff;
+    --border-primary: 1px solid var(--color-primary);
+    --font-family-title: 'Albert Sans', sans-serif;
+    --font-family-body: 'Albert Sans', sans-serif;
+}
+
+/* Global Styles & Mobile-first foundation */
+html {
+    scroll-behavior: smooth;
+}
+
+body {
+    font-family: var(--font-family-body);
+    margin: 0;
+    background: var(--color-background);
+    color: var(--color-primary);
+    letter-spacing: 0.01em;
+}
+
+/* Reusable container for content width */
+.container {
+    max-width: 950px;
+    margin-left: auto;
+    margin-right: auto;
+    padding-left: 20px;
+    padding-right: 20px;
+}
+
+/* === HEADER === */
+.site-header {
+    text-align: center;
+    padding-top: 50px;
+}
+
+.header-container {
+    padding: 0 20px;
+}
+
+.logo {
+    width: 540px;
+    max-width: 100%;
+    height: auto;
+    margin-bottom: 22px;
+}
+
+.tagline {
+    font-family: var(--font-family-title);
+    font-size: 16px;
+    text-transform: uppercase;
+    letter-spacing: 0.25em;
+    color: var(--color-primary);
+    margin-bottom: 38px;
+    font-weight: 300;
+}
+
+.nav-wrapper {
+    border-top: var(--border-primary);
+    border-bottom: var(--border-primary);
+}
+
+.main-nav {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    max-width: 950px;
+    margin: 0 auto;
+}
+
+.nav-item {
+    font-family: var(--font-family-body);
+    font-size: 10px;
+    padding: 10px 24px;
+    letter-spacing: 0.17em;
+    color: var(--color-primary);
+    text-align: center;
+    text-decoration: none;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-weight: 300;
+    position: relative;
+    background: var(--color-background);
+    transition: all 0.3s ease;
+    border-right: var(--border-primary);
+    border-bottom: var(--border-primary);
+    flex-grow: 1;
+}
+
+.main-nav .nav-item:first-child {
+    border-left: var(--border-primary);
+}
+
+.social-links {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    padding: 10px 24px;
+    border-right: var(--border-primary);
+    border-bottom: var(--border-primary);
+}
+
+.social-links img {
+    height: 16px;
+    width: auto;
+    transition: transform 0.15s;
+    opacity: 0.74;
+}
+
+.social-links a:hover img {
+    opacity: 1;
+    transform: scale(1.1);
+}
+
+@media (min-width: 751px) {
+    .main-nav {
+        display: grid;
+        grid-template-columns: repeat(5, 1fr) auto;
+        align-items: stretch;
+    }
+    
+    .main-nav > * {
+        border-bottom: none;
+    }
+
+    .main-nav > *:first-child {
+        border-left: var(--border-primary);
+    }
+    
+    .social-links {
+        border-bottom: none;
+    }
+}
+
+.nav-item::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 2px;
+    background-color: var(--color-primary);
+    transform: scaleY(0);
+    transform-origin: bottom;
+    transition: transform 0.7s ease-in-out;
+}
+
+.nav-item:hover::after,
+.nav-item.active::after {
+    transform: scaleY(1);
+}
+
+/* === MAIN CONTENT === */
+.notification-area {
+    width: 100%;
+    margin: 0;
+    padding: 0;
+    background: transparent;
+}
+
+.access-notification {
+    background: #d4edda;
+    border: 1px solid #c3e6cb;
+    color: #155724;
+    text-align: center;
+    padding: 12px 20px;
+    margin: 20px auto 20px auto;
+    max-width: 650px;
+    border-radius: 8px;
+    font-size: 15px;
+    font-weight: 500;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+.divider {
+    width: calc(100% - 40px);
+    max-width: none;
+    margin: 54px auto;
+    border-bottom: var(--border-primary);
+}
+
+.hero-section {
+    text-align: center;
+    margin-top: 70px;
+    max-width: 950px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.hero-image-container {
+    position: relative;
+    max-width: 950px;
+    margin: 0 auto 0 auto;
+    background: var(--color-background);
+    height: 450px;
+    overflow: visible;
+}
+
+.hero-image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+}
+
+.image-overlay-text {
+    position: absolute;
+    top: -20px;
+    left: 0px;
+    padding: 20px 100px 20px 100px;
+    background: var(--color-background);
+    border: var(--border-primary);
+    font-family: var(--font-family-body);
+    text-transform: uppercase;
+    font-size: 13px;
+    letter-spacing: 0.12em;
+    color: var(--color-primary);
+    font-weight: 400;
+    text-align: center;
+}
+
+.hero-text-content {
+    max-width: 950px;
+    margin: 0 auto;
+    padding: 15px 15px 25px 15px;
+    background: var(--color-background);
+    border: var(--border-primary);
+    text-align: left;
+}
+
+.hero-title {
+    font-family: var(--font-family-title);
+    font-size: 24px;
+    text-transform: uppercase;
+    font-weight: 400;
+    letter-spacing: 0.09em;
+    margin-bottom: 15px;
+    margin-top: 0;
+}
+
+.hero-description {
+    font-size: 14.5px; 
+    color: var(--color-secondary);
+    letter-spacing: 0.03em;
+    text-transform: none;
+    font-weight: 400;
+    text-align: left;
+    line-height: 1.6;
+    margin: 0;
+}
+
+.hero-description + .hero-description {
+    margin-top: 1em; 
+}
+
+/* === Úpravy pro sekci "The Protocol Zero" (Jednoduchá, moderní verze) === */
+.protocol-section {
+    text-align: center;
+    max-width: 800px;
+    margin: 60px auto 120px auto;
+}
+
+.protocol-title {
+    font-size: 28px;
+    font-weight: 700;
+    letter-spacing: 0.15em;
+    margin-bottom: 25px;
+    position: relative;
+    display: inline-block;
+    text-transform: uppercase;
+}
+
+/* Odstraněno původní ::after podtržítko */
+
+/* Scroll-triggered underline effect only for ZERO word */
+.zero-word {
+    position: relative;
+    display: inline-block;
+}
+
+.zero-word::after {
+    content: '';
+    position: absolute;
+    bottom: -8px;
+    left: 0;
+    width: 100%;
+    height: 3px;
+    background-color: var(--color-primary);
+    transform: scaleX(0);
+    transform-origin: left;
+    transition: transform 0.8s ease-out;
+}
+
+.zero-word.animate-underline::after {
+    transform: scaleX(1);
+}
+
+.protocol-tagline {
+    font-size: 15px;
+    letter-spacing: 0.12em;
+    color: #444;
+    text-transform: uppercase;
+    line-height: 1.6;
+    font-weight: 300;
+    margin-bottom: 25px;
+}
+
+.features-section {
+    margin-bottom: 120px;
+    margin-top: -30px;
+}
+
+.features-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 30px;
+    margin-top: 0;
+    padding: 0 20px;
+}
+
+@media (min-width: 751px) {
+    .features-grid {
+        grid-template-columns: repeat(3, 1fr);
+        gap: 40px;
+        padding: 0;
+    }
+}
+
+.feature-item {
+    background: #fdfdfd;
+    border: 1px solid #e2e2e2;
+    padding: 50px 35px 45px 35px;
+    transition: transform 0.4s ease, box-shadow 0.4s ease, border-color 0.4s ease;
+    position: relative;
+    overflow: hidden;
+    border-radius: 8px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
+}
+
+.feature-item:hover {
+    transform: translateY(-8px);
+    border-color: #cacaca;
+    box-shadow: 0 15px 35px rgba(0, 0, 0, 0.1);
+}
+
+.feature-meta {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 15px;
+    margin-top: 40px;
+}
+
+.feature-icon {
+    margin-bottom: 0;
+    transition: all 0.4s ease;
+}
+
+.feature-icon img {
+    height: 60px;
+    opacity: 0.95;
+}
+
+.feature-item:hover .feature-icon {
+    transform: scale(1.1);
+}
+
+.feature-status {
+    font-size: 13px;
+    font-weight: 300;
+    color: #888;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    transition: color 0.4s ease;
+}
+
+.feature-item:hover .feature-status {
+    color: var(--color-primary);
+}
+
+.feature-main {
+    text-align: left;
+}
+
+.feature-title {
+    font-size: 19px;
+    font-weight: 700;
+    margin-top: 0;
+    margin-bottom: 15px;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: #1a1a1a;
+    transition: color 0.4s ease;
+    text-align: center;
+}
+
+.feature-item:hover .feature-title {
+    color: #000;
+}
+
+.feature-subtitle {
+    font-size: 14px;
+    color: #666;
+    letter-spacing: 0.05em;
+    font-weight: 300;
+    margin-top: 0;
+    margin-bottom: 20px;
+    text-align: center;
+}
+
+.feature-text {
+    font-size: 15px;
+    color: #555;
+    letter-spacing: 0.02em;
+    line-height: 1.7;
+    text-align: left;
+}
+
+.feature-specs {
+    list-style: none;
+    padding: 0;
+    margin: 25px 0 0 0;
+    text-align: left;
+    border-top: 1px dashed #e2e2e2;
+    padding-top: 25px;
+}
+
+.feature-specs li {
+    font-size: 13px;
+    color: #555;
+    line-height: 2.2;
+    letter-spacing: 0.02em;
+    position: relative;
+    padding-left: 18px;
+    font-weight: 400;
+}
+
+.feature-specs li::before {
+    content: '→';
+    position: absolute;
+    left: 0;
+    color: var(--color-primary);
+    font-weight: bold;
+    opacity: 0.7;
+    transition: all 0.4s ease;
+}
+
+.feature-item:hover .feature-specs li::before {
+    opacity: 1;
+    transform: translateX(3px);
+}
+
+/* === ABOUT SECTION === */
+.about-section {
+    margin: 80px auto 120px auto;
+}
+
+.about-title {
+    font-family: var(--font-family-title);
+    font-size: 28px;
+    text-transform: uppercase;
+    font-weight: 700;
+    letter-spacing: 0.15em;
+    margin-bottom: 40px;
+    text-align: center;
+}
+
+.about-content {
+    max-width: 800px;
+    margin: 0 auto;
+}
+
+.about-text {
+    font-size: 14.5px; 
+    color: var(--color-secondary);
+    letter-spacing: 0.03em;
+    text-transform: none;
+    font-weight: 400;
+    text-align: left;
+    line-height: 1.6;
+    margin-bottom: 20px;
+}
+
+.about-text:last-child {
+    margin-bottom: 0;
+}
+
+/* === FAQ SECTION === */
+.faq-section {
+    margin: 80px auto 120px auto;
+}
+
+.faq-title {
+    font-family: var(--font-family-title);
+    font-size: 28px;
+    text-transform: uppercase;
+    font-weight: 700;
+    letter-spacing: 0.15em;
+    margin-bottom: 40px;
+    text-align: center;
+}
+
+.faq-content {
+    max-width: 800px;
+    margin: 0 auto;
+}
+
+.faq-item {
+    border-left: var(--border-primary);
+    border-top: var(--border-primary);
+    border-bottom: var(--border-primary);
+    margin-bottom: 2px;
+}
+
+.faq-question {
+    width: calc(100% - 48px);
+    background: var(--color-background);
+    border: none;
+    padding: 20px 24px;
+    cursor: pointer;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-family: var(--font-family-body);
+    font-size: 14px;
+    font-weight: 400;
+    color: var(--color-primary);
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+    transition: background-color 0.3s ease;
+    position: relative;
+    margin: 0;
+}
+
+.faq-question:hover {
+    background-color: #f8f8f8;
+}
+
+.faq-item.active .faq-question {
+    background-color: #f8f8f8;
+}
+
+.faq-arrow {
+    font-size: 18px;
+    font-weight: bold;
+    position: absolute;
+    right: 30px;
+    transition: all 0.3s ease;
+}
+
+.faq-answer {
+    display: none;
+    background: var(--color-background);
+}
+
+.faq-answer p {
+    margin: 0;
+    padding: 20px 24px;
+    font-size: 14px;
+    color: var(--color-secondary);
+    line-height: 1.6;
+    letter-spacing: 0.02em;
+}
+
+/* === ACCESS SYSTEM STYLES (OPRAVENO A UPRAVENO) === */
+.access-page {
+    display: none;
+    min-height: 60vh;
+}
+
+.access-page.active {
+    display: block;
+}
+
+/* ***NOVÝ STYL: Flexbox Box pro jednotlivé formuláře (nahrazuje .access-section styl rámečku)*** */
+.access-box {
+    background: var(--color-background);
+    border: var(--border-primary);
+    padding: 50px 30px;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between; /* KLÍČOVÉ: Tlačí obsah od sebe, zarovná tlačítko dolů */
+    min-height: 380px; /* Zajistí stejnou výšku boxů */
+    box-shadow: none;
+}
+/* Upravujeme existující .access-section, pokud ho použijete pro celý kontejner */
+.access-section {
+    text-align: center;
+    max-width: 700px;
+    margin: 60px auto 80px auto;
+    padding: 40px 30px;
+    background: #fdfdfd;
+    border: var(--border-primary);
+    border-radius: 8px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
+}
+
+/* Speciální nastavení pro stránku s produkty - menší mezera kvůli notification baru */
+#contentPage .access-section {
+    margin: 20px auto 80px auto;
+}
+
+.access-title {
+    font-family: var(--font-family-title);
+    font-size: 28px;
+    text-transform: uppercase;
+    font-weight: 700;
+    letter-spacing: 0.15em;
+    margin-bottom: 20px;
+    color: var(--color-primary);
+}
+
+.access-description {
+    font-size: 15px;
+    color: var(--color-secondary);
+    letter-spacing: 0.02em;
+    line-height: 1.6;
+    margin-bottom: 30px;
+}
+
+.access-warning {
+    background: #fff3cd;
+    border: 1px solid #ffeaa7;
+    border-radius: 8px;
+    padding: 20px;
+    margin: 25px 0;
+    color: #856404;
+    text-align: left;
+    font-size: 14px;
+    line-height: 1.5;
+}
+
+.access-success {
+    background: #d4edda;
+    border: 1px solid #c3e6cb;
+    border-radius: 8px;
+    padding: 20px;
+    margin: 25px 0;
+    color: #155724;
+    font-size: 15px;
+}
+
+.access-error {
+    background: #f8d7da;
+    border: 1px solid #f5c6cb;
+    border-radius: 8px;
+    padding: 20px;
+    margin: 25px 0;
+    color: #721c24;
+    font-size: 14px;
+}
+
+.access-info {
+    background: #e2e3e5;
+    border: 1px solid #d6d8db;
+    border-radius: 8px;
+    padding: 20px;
+    margin: 25px 0;
+    color: #383d41;
+    text-align: left;
+    font-size: 14px;
+    line-height: 1.5;
+}
+
+.access-buttons {
+    margin: 30px 0 20px 0;
+}
+
+.access-btn {
+    font-family: var(--font-family-body);
+    font-size: 13px;
+    padding: 15px 30px;
+    margin: 8px;
+    border: var(--border-primary);
+    border-radius: 6px;
+    cursor: pointer;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    font-weight: 400;
+    transition: all 0.3s ease;
+    text-decoration: none;
+    display: inline-block;
+}
+
+/* *** NOVÝ/SPOLEČNÝ STYL TLAČÍTEK (černý) pro obrázek *** */
+.access-btn-dark {
+    font-family: var(--font-family-body);
+    font-size: 13px;
+    padding: 15px 35px;
+    border: none; /* Odstranit rámeček */
+    border-radius: 0; /* Bez zaoblení */
+    cursor: pointer;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    font-weight: 500;
+    transition: background-color 0.3s ease;
+    background: var(--color-primary); 
+    color: var(--color-background); 
+    display: inline-block;
+    width: auto;
+}
+
+.access-btn-dark:hover {
+    background: var(--color-secondary);
+}
+
+.access-btn.primary {
+    background: var(--color-primary);
+    color: var(--color-background);
+}
+
+.access-btn.primary:hover {
+    background: var(--color-secondary);
+    transform: translateY(-2px);
+}
+
+.access-btn.secondary {
+    background: var(--color-background);
+    color: var(--color-primary);
+}
+
+.access-btn.secondary:hover {
+    background: #f8f8f8;
+    transform: translateY(-2px);
+}
+
+.access-token {
+    background: #f8f9fa;
+    border: 2px solid #e9ecef;
+    border-radius: 8px;
+    padding: 25px;
+    margin: 25px 0;
+    word-break: break-all;
+    font-family: 'Courier New', monospace;
+    font-size: 18px;
+    color: #495057;
+    font-weight: bold;
+    letter-spacing: 2px;
+}
+
+.copy-btn {
+    background: #28a745;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 13px;
+    margin: 10px;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    transition: all 0.3s ease;
+}
+
+.copy-btn:hover {
+    background: #218838;
+    transform: translateY(-1px);
+}
+
+/* *** NOVÝ STYL: Kontejner pro popis + Input (Flexbox roztahování) *** */
+.access-input-group {
+    margin: 25px 0 40px 0; /* Více místa pod inputem */
+    flex-grow: 1; /* KLÍČOVÉ: Roztáhne se a odtlačí tlačítko na dno */
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start;
+}
+
+/* *** UPRAVENÝ STYL VSTUPNÍHO POLE *** */
+.access-input {
+    width: 100%;
+    max-width: 320px; /* Užší pole pro lepší vzhled */
+    padding: 15px;
+    border: 1px solid #e9ecef;
+    border-radius: 0; /* Bez zaoblení */
+    font-size: 15px;
+    font-family: var(--font-family-body);
+    font-style: italic; /* Pro placeholder */
+    text-align: center;
+    letter-spacing: 0.05em;
+    color: #888;
+    transition: border-color 0.3s ease;
+}
+
+.access-input:focus {
+    outline: none;
+    border-color: var(--color-primary);
+}
+
+.resource-list {
+    text-align: left;
+    margin-top: 30px;
+}
+
+/* ***UPRAVENÝ ACCESS PAGE GRID pro menší mezeru nahoře*** */
+.access-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 30px;
+    /* ZMĚNA ZDE: Snížení horní mezery z 60px na 30px */
+    margin: 30px auto 80px auto; /* Centrování celého bloku */
+    max-width: 900px; /* Limituje šířku pro Grid */
+}
+
+@media (min-width: 900px) {
+    .access-grid {
+        grid-template-columns: 1fr 1fr;
+        gap: 40px;
+    }
+}
+/* ... (zbytek kódu, který se týká resources a chatu, je níže a je ponechán beze změny) */
+
+.resources-columns {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 25px;
+    margin-top: 20px;
+}
+
+@media (min-width: 768px) {
+    .resources-columns {
+        grid-template-columns: 1fr 1fr;
+        gap: 30px;
+    }
+}
+
+@media (min-width: 1024px) {
+    .resources-columns {
+        grid-template-columns: 1fr 1fr 1fr;
+        gap: 30px;
+    }
+}
+
+.resource-column {
+    background: #f8f9fa;
+    border-radius: 10px;
+    padding: 0;
+    box-shadow: 0 3px 10px rgba(0, 0, 0, 0.08);
+    overflow: hidden;
+}
+
+.expert-column {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: white;
+}
+
+.column-header {
+    padding: 20px;
+    text-align: center;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+    background: rgba(255, 255, 255, 0.05);
+}
+
+.expert-column .column-header {
+    background: rgba(255, 255, 255, 0.1);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+.column-header h3 {
+    margin: 0 0 8px 0;
+    font-size: 18px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: var(--color-primary);
+}
+
+.expert-column .column-header h3 {
+    color: white;
+}
+
+.column-header p {
+    margin: 0;
+    font-size: 13px;
+    color: #666;
+    font-weight: 300;
+}
+
+.expert-column .column-header p {
+    color: rgba(255, 255, 255, 0.8);
+}
+
+.resource-card {
+    padding: 20px;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+    transition: background-color 0.3s ease;
+}
+
+.resource-card:hover {
+    background: rgba(255, 255, 255, 0.5);
+}
+
+.expert-card {
+    text-align: center;
+    background: rgba(255, 255, 255, 0.1);
+}
+
+.expert-card:hover {
+    background: rgba(255, 255, 255, 0.15);
+}
+
+.resource-card:last-child {
+    border-bottom: none;
+}
+
+.resource-card h4 {
+    margin: 0 0 10px 0;
+    font-size: 16px;
+    font-weight: 600;
+    color: var(--color-primary);
+    line-height: 1.3;
+}
+
+.expert-card h4 {
+    color: white;
+    margin-top: 15px;
+}
+
+.resource-card p {
+    margin: 0 0 15px 0;
+    font-size: 13px;
+    color: #666;
+    line-height: 1.4;
+}
+
+.expert-card p {
+    color: rgba(255, 255, 255, 0.9);
+}
+
+.expert-icon {
+    font-size: 48px;
+    margin-bottom: 10px;
+    opacity: 0.9;
+}
+
+.expert-status {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    margin: 15px 0;
+    font-size: 12px;
+    font-weight: 500;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+}
+
+.status-indicator {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: #28a745;
+    animation: pulse 2s infinite;
+}
+
+.status-indicator.offline {
+    background: #dc3545;
+    animation: none;
+}
+
+@keyframes pulse {
+    0% { opacity: 1; }
+    50% { opacity: 0.5; }
+    100% { opacity: 1; }
+}
+
+.resource-actions {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    margin-top: 15px;
+}
+
+.resource-btn {
+    background: var(--color-primary);
+    color: var(--color-background);
+    padding: 10px 15px;
+    border-radius: 6px;
+    text-decoration: none;
+    font-size: 12px;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    font-weight: 500;
+    transition: all 0.3s ease;
+    display: inline-block;
+    text-align: center;
+}
+
+.resource-btn:hover {
+    background: var(--color-secondary);
+    transform: translateY(-1px);
+}
+
+.resource-btn.view {
+    background: #6c757d;
+}
+
+.resource-btn.view:hover {
+    background: #5a6268;
+}
+
+.resource-btn.expert {
+    background: rgba(255, 255, 255, 0.2);
+    color: white;
+    border: 2px solid rgba(255, 255, 255, 0.3);
+    font-weight: 600;
+}
+
+.resource-btn.expert:hover {
+    background: rgba(255, 255, 255, 0.3);
+    border-color: rgba(255, 255, 255, 0.5);
+    transform: translateY(-2px);
+}
+
+/* Responsive adjustments */
+@media (max-width: 767px) {
+    .resource-actions {
+        flex-direction: column;
+    }
+    
+    .resources-columns {
+        gap: 20px;
+    }
+    
+    .resource-column {
+        margin-bottom: 20px;
+    }
+}
+
+/* === CHAT PAGE STYLES === */
+.chat-page {
+    min-height: 60vh;
+    display: block;
+}
+
+.chat-section {
+    text-align: center;
+    max-width: 900px;
+    margin: 60px auto 80px auto;
+    padding: 30px;
+    background: #fdfdfd;
+    border: var(--border-primary);
+    border-radius: 8px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
+}
+
+.chat-title {
+    font-family: var(--font-family-title);
+    font-size: 28px;
+    text-transform: uppercase;
+    font-weight: 700;
+    letter-spacing: 0.15em;
+    margin-bottom: 15px;
+    color: var(--color-primary);
+}
+
+.chat-description {
+    font-size: 15px;
+    color: var(--color-secondary);
+    letter-spacing: 0.02em;
+    line-height: 1.6;
+    margin-bottom: 25px;
+}
+
+.chat-status {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    margin: 20px 0;
+    font-size: 14px;
+    font-weight: 500;
+    color: #28a745;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+}
+
+.chat-container {
+    background: #ffffff;
+    border: 2px solid #e9ecef;
+    border-radius: 10px;
+    margin: 30px 0;
+    height: 600px;
+    display: flex;
+    flex-direction: column;
+    position: relative;
+    overflow: hidden;
+}
+
+.chat-messages {
+    flex: 1;
+    padding: 20px;
+    overflow-y: auto;
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    background: #fafafa;
+}
+
+.message {
+    display: flex;
+    gap: 12px;
+    animation: messageSlideIn 0.3s ease-out;
+}
+
+.user-message {
+    align-self: flex-end;
+    flex-direction: row-reverse;
+    max-width: 70%;
+}
+
+.bot-message {
+    align-self: flex-start;
+    max-width: 70%;
+}
+
+.message-content {
+    background: white;
+    padding: 15px 18px;
+    border-radius: 18px;
+    border: 1px solid #e9ecef;
+    position: relative;
+    word-wrap: break-word;
+    flex: 1;
+}
+
+.user-message .message-content {
+    background: var(--color-primary);
+    color: white;
+    border-color: var(--color-primary);
+}
+
+.message-text {
+    text-align: left;
+    line-height: 1.5;
+    font-size: 14px;
+}
+
+.message-text p {
+   margin: 8px 0;
+   line-height: 1.5;
+}
+
+.message-text p:first-child {
+   margin-top: 0;
+}
+
+.message-text p:last-child {
+   margin-bottom: 0;
+}
+
+.message-text ul, .message-text ol {
+   margin: 10px 0;
+   padding-left: 20px;
+   text-align: left;
+}
+
+.message-text li {
+   margin: 5px 0;
+   line-height: 1.4;
+   text-align: left;
+}
+
+.message-text h1, .message-text h2, .message-text h3 {
+   margin: 15px 0 10px 0;
+   font-weight: 600;
+   text-align: left;
+}
+
+.message-text h3 {
+   font-size: 16px;
+   color: #333;
+}
+
+.message-text strong {
+   font-weight: 600;
+   color: #222;
+}
+
+.user-message .message-text strong {
+   color: #fff;
+}
+
+.message-text code {
+   background: #f1f1f1;
+   padding: 2px 4px;
+   border-radius: 3px;
+   font-family: monospace;
+}
+
+.message-time {
+   font-size: 11px;
+   opacity: 0.7;
+   margin-top: 8px;
+   display: block;
+   text-align: right;
+}
+
+.chat-input-area {
+   border-top: 1px solid #e9ecef;
+   padding: 15px 20px;
+   background: white;
+}
+
+.chat-input-container {
+   display: flex;
+   gap: 10px;
+   align-items: flex-end;
+}
+
+#chatInput {
+   flex: 1;
+   border: 2px solid #e9ecef;
+   border-radius: 20px;
+   padding: 12px 16px;
+   font-size: 14px;
+   font-family: var(--font-family-body);
+   resize: none;
+   outline: none;
+   transition: border-color 0.3s ease;
+   min-height: 44px;
+   max-height: 120px;
+}
+
+#chatInput:focus {
+   border-color: var(--color-primary);
+}
+
+#chatInput:disabled {
+   background: #f8f9fa;
+   cursor: not-allowed;
+}
+
+#sendButton {
+   width: 44px;
+   height: 44px;
+   border: none;
+   border-radius: 50%;
+   background: var(--color-primary);
+   color: white;
+   cursor: pointer;
+   display: flex;
+   align-items: center;
+   justify-content: center;
+   transition: all 0.3s ease;
+   flex-shrink: 0;
+}
+
+#sendButton:hover:not(:disabled) {
+   background: var(--color-secondary);
+   transform: scale(1.05);
+}
+
+#sendButton:disabled {
+   background: #6c757d;
+   cursor: not-allowed;
+   transform: none;
+}
+
+.send-icon {
+   font-size: 16px;
+   transform: rotate(-45deg);
+}
+
+.typing-indicator {
+   display: flex;
+   gap: 3px;
+   align-items: center;
+   padding: 8px 0;
+   color: #6c757d;
+   font-size: 14px;
+   justify-content: center;
+}
+
+.typing-indicator span {
+   width: 8px;
+   height: 8px;
+   border-radius: 50%;
+   background: #6c757d;
+   animation: typingDot 1.4s infinite ease-in-out;
+}
+
+.typing-indicator span:nth-child(1) { animation-delay: -0.32s; }
+.typing-indicator span:nth-child(2) { animation-delay: -0.16s; }
+
+@keyframes typingDot {
+   0%, 80%, 100% { 
+       transform: scale(0.8);
+       opacity: 0.5;
+   }
+   40% { 
+       transform: scale(1);
+       opacity: 1;
+   }
+}
+
+@keyframes messageSlideIn {
+   from {
+       opacity: 0;
+       transform: translateY(10px);
+   }
+   to {
+       opacity: 1;
+       transform: translateY(0);
+   }
+}
+
+.chat-messages::-webkit-scrollbar {
+   width: 6px;
+}
+
+.chat-messages::-webkit-scrollbar-track {
+   background: #f1f1f1;
+   border-radius: 10px;
+}
+
+.chat-messages::-webkit-scrollbar-thumb {
+   background: #c1c1c1;
+   border-radius: 10px;
+}
+
+.chat-messages::-webkit-scrollbar-thumb:hover {
+   background: #a8a8a8;
+}
+
+.chat-info {
+   background: #e2e3e5;
+   border: 1px solid #d6d8db;
+   border-radius: 8px;
+   padding: 20px;
+   margin: 25px 0 0 0;
+   color: #383d41;
+   text-align: left;
+   font-size: 14px;
+   line-height: 1.5;
+}
+
+@media (max-width: 768px) {
+   .chat-section {
+       margin: 40px auto 60px auto;
+       padding: 20px;
+   }
+   
+   .chat-container {
+       min-height: 400px;
+   }
+   
+   .message-content {
+       max-width: 85%;
+   }
+   
+   .message-avatar {
+       width: 35px;
+       height: 35px;
+       font-size: 18px;
+   }
+   
+   .message-content {
+       padding: 12px 15px;
+   }
+}
+/* === MODAL STYLES === */
+.modal {
+  display: none; 
+  position: fixed;
+  z-index: 9999;
+  left: 0; top: 0;
+  width: 100%; height: 100%;
+  background-color: rgba(0,0,0,0.7);
+  justify-content: center;
+  align-items: center;
+}
+
+.modal-content {
+  background: #fff;
+  padding: 30px;
+  border-radius: 10px;
+  max-width: 400px;
+  width: 90%;
+  text-align: center;
+  box-shadow: 0 5px 20px rgba(0,0,0,0.3);
+  animation: fadeIn 0.3s ease;
+}
+
+.modal-close {
+  position: absolute;
+  top: 15px; right: 20px;
+  font-size: 28px;
+  cursor: pointer;
+  color: #333;
+}
+
+@keyframes fadeIn {
+  from {opacity: 0; transform: translateY(-20px);}
+  to {opacity: 1; transform: translateY(0);}
+}
+/* === FINAL FIX CLASS === */
+.hidden {
+    display: none !important;
+}

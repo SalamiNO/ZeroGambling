@@ -1,0 +1,244 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Virtual Expert Chat | Zero G</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Albert+Sans:wght@100;200;300;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+    <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+</head>
+<body id="top">
+    <header class="site-header">
+        <div class="header-container">
+            <img src="images/logo.png" alt="Zerogambling Logo" class="logo">
+            <div class="tagline">PRIVATE RECOVERY. FOR THOSE WHO CAN'T AFFORD TO BE SEEN.</div>
+            
+            <div class="nav-wrapper">
+                <nav class="main-nav">
+                    <a href="index.html#top" class="nav-item">Home</a>
+                    <a href="index.html#protocol" class="nav-item">The Protocol Zero</a>
+                    <a href="index.html#about" class="nav-item">About</a>
+                    <a href="index.html#faq" class="nav-item">FAQ</a>
+                    <a href="access.html" class="nav-item">Access</a>
+                    <span class="social-links">
+                        <a href="#"><img src="images/fb.png" alt="Facebook logo"></a>
+                        <a href="#"><img src="images/x.png" alt="X logo"></a>
+                        <a href="#"><img src="images/ig.png" alt="Instagram logo"></a>
+                    </span>
+                </nav>
+            </div>
+            
+        </div>
+    </header>
+
+    <main>
+        <div class="container">
+            <div class="chat-page">
+                <div class="chat-section">
+                    <h1 class="chat-title">Virtual Recovery Expert</h1>
+                    <p class="chat-description">Get instant support and guidance from our AI-powered recovery assistant.</p>
+                    
+                    <div class="chat-status">
+                        <span class="status-indicator online"></span>
+                        Expert is online and ready to help
+                    </div>
+                    
+                    <!-- Chat interface -->
+                    <div class="chat-container" id="chatContainer">
+                        <div class="chat-messages" id="chatMessages">
+                            <div class="message bot-message">
+                                <div class="message-avatar">🤖</div>
+                                <div class="message-content">
+                                    <div class="message-text">Hello! I'm your Virtual Recovery Expert. I'm here to provide support and guidance on your journey to overcome gambling addiction. How can I help you today?</div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="chat-input-area">
+                            <div class="chat-input-container">
+                                <textarea 
+                                    id="chatInput" 
+                                    placeholder="Type your message here..." 
+                                    rows="2"
+                                    maxlength="500"></textarea>
+                                <button id="sendButton" onclick="sendMessage()">
+                                    <span class="send-icon">➤</span>
+                                </button>
+                            </div>
+                            <div class="chat-status" id="chatStatus">
+                                <span class="typing-indicator" id="typingIndicator" style="display: none;">
+                                    <span></span><span></span><span></span>
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="chat-info">
+                        <strong>🔒 Privacy:</strong> This chat is completely anonymous and private. No personal information is stored or tracked.
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+    
+    <footer class="site-footer">
+        <div class="divider"></div>
+        <div class="footer-content container">
+            <p class="copyright">Copyright © 2025 Anonymous Edition. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <script>
+        // KONFIGURACE - LOCALHOST API
+        const API_URL = 'http://localhost:3000/chat';
+
+        // Chat initialization
+        document.addEventListener('DOMContentLoaded', function() {
+            console.log('Chat initialized');
+            
+            // Enter key listener for chat input
+            const chatInput = document.getElementById('chatInput');
+            chatInput.addEventListener('keypress', function(e) {
+                if (e.key === 'Enter' && !e.shiftKey) {
+                    e.preventDefault();
+                    sendMessage();
+                }
+            });
+            
+            // Auto-resize textarea
+            chatInput.addEventListener('input', function() {
+                this.style.height = 'auto';
+                this.style.height = Math.min(this.scrollHeight, 120) + 'px';
+            });
+        });
+
+        // Send message function
+        async function sendMessage() {
+            const chatInput = document.getElementById('chatInput');
+            const sendButton = document.getElementById('sendButton');
+            const message = chatInput.value.trim();
+            
+            if (!message) return;
+            
+            // Disable input while processing
+            chatInput.disabled = true;
+            sendButton.disabled = true;
+            
+            // Add user message to chat
+            addMessageToChat('user', message);
+            
+            // Clear input
+            chatInput.value = '';
+            chatInput.style.height = 'auto';
+            
+            // Show typing indicator
+            showTypingIndicator();
+            
+            try {
+                // Call localhost API
+                const response = await fetch(API_URL, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({
+                        message: message
+                    })
+                });
+                
+                if (!response.ok) {
+                    throw new Error(`API Error: ${response.status}`);
+                }
+                
+                const data = await response.json();
+                const botResponse = data.response;
+                
+                // Hide typing indicator and show response
+                hideTypingIndicator();
+                addMessageToChat('bot', botResponse);
+                
+            } catch (error) {
+                console.error('Chat error:', error);
+                hideTypingIndicator();
+                addMessageToChat('bot', 'Omlouvám se, došlo k technické chybě. Ujistěte se, že API server běží na localhost:3000.');
+            }
+            
+            // Re-enable input
+            chatInput.disabled = false;
+            sendButton.disabled = false;
+            chatInput.focus();
+        }
+
+        // Add message to chat display with markdown support
+        function addMessageToChat(sender, message) {
+            const chatMessages = document.getElementById('chatMessages');
+            const messageDiv = document.createElement('div');
+            messageDiv.className = `message ${sender}-message`;
+            
+            const avatar = sender === 'user' ? '👤' : '🤖';
+            
+            // Parse markdown for bot messages
+            let formattedMessage;
+            if (sender === 'bot' && typeof marked !== 'undefined') {
+                formattedMessage = marked.parse(message);
+            } else {
+                formattedMessage = `<p>${message}</p>`;
+            }
+            
+            messageDiv.innerHTML = `
+                <div class="message-avatar">${avatar}</div>
+                <div class="message-content">
+                    <div class="message-text">${formattedMessage}</div>
+                    <span class="message-time">${new Date().toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'})}</span>
+                </div>
+            `;
+            
+            chatMessages.appendChild(messageDiv);
+            
+            // Scroll to bottom
+            chatMessages.scrollTop = chatMessages.scrollHeight;
+        }
+
+        // Show typing indicator
+        function showTypingIndicator() {
+            const typingIndicator = document.getElementById('typingIndicator');
+            if (typingIndicator) {
+                typingIndicator.style.display = 'flex';
+            }
+        }
+
+        // Hide typing indicator
+        function hideTypingIndicator() {
+            const typingIndicator = document.getElementById('typingIndicator');
+            if (typingIndicator) {
+                typingIndicator.style.display = 'none';
+            }
+        }
+
+        // Scroll animation for ZERO word only (if needed on other pages)
+        function handleScrollAnimation() {
+            const zeroWord = document.getElementById('zero-word');
+            const protocolSection = document.getElementById('protocol');
+            
+            if (zeroWord && protocolSection) {
+                const sectionTop = protocolSection.offsetTop;
+                const scrollPosition = window.scrollY + window.innerHeight;
+                
+                // Trigger animation when section comes into view
+                if (scrollPosition > sectionTop + 100) {
+                    zeroWord.classList.add('animate-underline');
+                }
+            }
+        }
+
+        // Add scroll event listener
+        window.addEventListener('scroll', handleScrollAnimation);
+        
+        // Check on page load in case user refreshed at this position
+        document.addEventListener('DOMContentLoaded', handleScrollAnimation);
+    </script>
+</body>
+</html>

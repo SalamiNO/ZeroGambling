@@ -1,0 +1,257 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Access | Zero G</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Albert+Sans:wght@100;200;300;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+  <style>
+    /* === MODAL STYLES === */
+    .modal {
+      display: none;
+      position: fixed;
+      z-index: 9999;
+      left: 0; top: 0;
+      width: 100%; height: 100%;
+      background-color: rgba(0,0,0,0.7);
+      justify-content: center;
+      align-items: center;
+    }
+
+    .modal-content {
+      background: #fff;
+      padding: 30px;
+      border-radius: 10px;
+      max-width: 400px;
+      width: 90%;
+      text-align: center;
+      box-shadow: 0 5px 20px rgba(0,0,0,0.3);
+      animation: fadeIn 0.3s ease;
+      position: relative;
+    }
+
+    .modal-close {
+      position: absolute;
+      top: 10px; right: 15px;
+      font-size: 26px;
+      cursor: pointer;
+      color: #333;
+    }
+
+    @keyframes fadeIn {
+      from {opacity: 0; transform: translateY(-20px);}
+      to {opacity: 1; transform: translateY(0);}
+    }
+  </style>
+</head>
+<body>
+  <header class="site-header">
+    <div class="header-container">
+      <img src="images/logo.png" alt="Zerogambling Logo" class="logo">
+      <div class="tagline">PRIVATE RECOVERY. FOR THOSE WHO CAN'T AFFORD TO BE SEEN.</div>
+      <div class="nav-wrapper">
+        <nav class="main-nav">
+          <a href="index.html#top" class="nav-item">Home</a>
+          <a href="index.html#protocol" class="nav-item">The Protocol Zero</a>
+          <a href="index.html#about" class="nav-item">About</a>
+          <a href="index.html#faq" class="nav-item">FAQ</a>
+          <a href="access.html" class="nav-item active">Access</a>
+        </nav>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    <div class="notification-area" id="notificationArea" style="display: none;">
+      <div class="access-notification">
+        Access verified! Here are your anonymous resources.
+      </div>
+    </div>
+
+    <div class="container">
+      <div class="access-grid" id="accessForms">
+        
+        <section id="haveTokenSection" class="access-section">
+          <h2 class="access-title">Have access?</h2>
+          <p>Enter your permanent token to unlock the resources.</p>
+          <input type="text" id="tokenInput" placeholder="Enter your access token" class="access-input">
+          <div class="access-buttons">
+            <button class="access-btn primary" onclick="verifyTokenAndRedirect()">Access Content</button> 
+          </div>
+        </section>
+
+        <section id="buyTokenSection" class="access-section">
+          <h2 class="access-title">Need access?</h2>
+          <p>Enter your email to generate QR code. Once payment is confirmed, check your email.</p>
+          <input type="email" id="emailInput" placeholder="Enter your email" class="access-input">
+          <div class="access-buttons">
+            <button class="access-btn primary" onclick="createPayment()">Get Payment Details</button>
+          </div>
+        </section>
+
+      </div>
+      
+      <div class="access-page" id="contentPage" style="display: none;">
+        <div class="access-section">
+            <h1 class="access-title">Your Resources</h1>
+            <div class="resource-list" id="resourceList">
+                </div>
+            <div class="access-info">
+                <strong>Tip:</strong> Bookmark this page for future access:<br>
+                <span id="bookmarkUrl"></span>
+            </div>
+            <div class="access-buttons">
+                <a href="index.html" class="access-btn secondary">Back to Home</a>
+            </div>
+        </div>
+      </div>
+      
+      <div class="access-error" id="errorMessage" style="display: none;"> </div>
+    </div>
+  </main>
+
+  <div id="paymentModal" class="modal">
+    <div class="modal-content">
+      <span class="modal-close" onclick="closeModal()">&times;</span>
+      <h3>Complete Your Payment</h3>
+      <p>Send exactly <strong><span id="payAmount"></span> BTC</strong> to this address:</p>
+      <code id="payAddress" style="display:block; margin:10px 0;"></code>
+      <img id="qrCode" alt="QR code" style="margin:15px 0;"/>
+      <p><em>After confirmation, your token will be sent to:</em> <strong><span id="confirmEmail"></span></strong></p>
+    </div>
+  </div>
+
+  <footer class="site-footer">
+    <div class="divider"></div>
+    <div class="footer-content container">
+      <p class="copyright">Copyright 2025 Anonymous Edition. All rights reserved.</p>
+    </div>
+  </footer>
+
+  <script>
+    // Data pro načítání zdrojů (na této stránce se sice nevolají, ale nechávána pro kompletnost)
+    const RESOURCES = {
+        manuals: [
+            { title: 'Protocol Zero - Fast Lane Edition', description: 'Quick path to immediate gambling problem resolution', url: 'https://drive.google.com/uc?export=download&id=1YRg9K227g3jyrzSUX0KjJhISijyuhl3N', viewUrl: 'https://drive.google.com/file/d/1YRg9K227g3jyrzSUX0KjJhISijyuhl3N/view', type: 'PDF' },
+            { title: 'Protocol Zero - Full Recovery OS', description: 'Complete operating system for full recovery', url: 'https://drive.google.com/uc?export=download&id=1bFE0tiLwMuIK-K-T01arJuoZhBMh0B70', viewUrl: 'https://drive.google.com/file/d/1bFE0tiLwMuIK-K-T01arJuoZhBMh0B70/view', type: 'PDF' }
+        ],
+        podcasts: [
+            { title: 'Protocol Zero - Fast Lane Edition', description: 'Audio version of Fast Lane Edition for on-the-go listening', url: 'https://drive.google.com/uc?export=download&id=1-MrhLyoafi1DhWb1i5wyxlRZQBT1HVKq', viewUrl: 'https://drive.google.com/file/d/1-MrhLyoafi1DhWb1i5wyxlRZQBT1HVKq/view', type: 'MP3' },
+            { title: 'Protocol Zero - Full Recovery Audio', description: 'Complete audio program for long-term recovery', url: 'https://drive.google.com/uc?export=download&id=1yI-dGB6ldsaq0Oi8TbadAhPoAPCD3z1F', viewUrl: 'https://drive.google.com/file/d/1yI-dGB6ldsaq0Oi8TbadAhPoAPCD3z1F/view', type: 'MP3' }
+        ],
+        virtualExpert: { 
+            title: 'Virtual Recovery Expert', 
+            description: 'AI-powered guidance and support available 24/7', 
+            chatUrl: 'chat.html', 
+            available: true 
+        }
+    };
+    
+    // === FUNKCE PRO ASYNCHRONNÍ OVĚŘENÍ TOKENU (OPRAVA) ===
+    async function verifyTokenAndRedirect() {
+      const token = document.getElementById("tokenInput").value.trim();
+      if (!token || token.length !== 32) { 
+        alert("Please enter a valid 32-character token.");
+        return;
+      }
+
+      // Zablokování UI během ověřování
+      const accessBtn = document.querySelector('#haveTokenSection .access-btn.primary');
+      const originalText = accessBtn.textContent;
+      accessBtn.textContent = 'Verifying...';
+      accessBtn.disabled = true;
+
+      try {
+          // Krok 1: Asynchronní ověření tokenu na API (port 4000)
+          const verifyUrl = `http://localhost:4000/verify/${token}`; 
+          const resp = await fetch(verifyUrl);
+          const data = await resp.json();
+
+          if (resp.ok && data.valid) {
+              // Krok 2: Token je platný. Přesměrujeme na resources (bez .html)
+              const redirectUrl = `http://localhost:56962/resources?token=${encodeURIComponent(token)}`;
+              console.log('Přesměrovuji na:', redirectUrl);
+              window.location.href = redirectUrl;
+          } else {
+              // Neplatný token
+              alert("Invalid access code. Please check and try again.");
+          }
+      } catch (err) {
+          console.error("Verification failed:", err);
+          alert("Verification failed. Check if API is running on port 4000.");
+      } finally {
+          // Uvolnění UI
+          accessBtn.textContent = originalText;
+          accessBtn.disabled = false;
+      }
+    }
+
+    // === CHCI KOUPIT PŘÍSTUP ===
+    async function createPayment() {
+      const email = document.getElementById("emailInput").value.trim();
+      if (!email) {
+        alert("Please enter your email.");
+        return;
+      }
+
+      try {
+        const resp = await fetch("http://localhost:4000/create", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ email })
+        });
+        const data = await resp.json();
+
+        if (data.error) {
+          alert("Error: " + data.error);
+          return;
+        }
+
+        // Naplníme modal daty
+        document.getElementById("payAmount").textContent = data.amount;
+        document.getElementById("payAddress").textContent = data.address;
+        document.getElementById("confirmEmail").textContent = email;
+        document.getElementById("qrCode").src =
+          `https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=bitcoin:${data.address}?amount=${data.amount}`;
+
+        // Zobraz modal
+        document.getElementById("paymentModal").style.display = "flex";
+
+      } catch (err) {
+        alert("Failed to create payment: " + err.message);
+      }
+    }
+
+    // Zavření modalu
+    function closeModal() {
+      document.getElementById("paymentModal").style.display = "none";
+    }
+    
+    // Funkce loadResources ponechána, ale na access.html by se neměla spouštět
+    function loadResources(token) {
+        // ... tato funkce by se měla spouštět jen na resources.html
+    }
+
+    // === HLAVNÍ LOGIKA NAČTENÍ STRÁNKY ===
+    document.addEventListener('DOMContentLoaded', function() {
+        const urlParams = new URLSearchParams(window.location.search);
+        
+        const accessForms = document.getElementById('accessForms');
+        const contentPage = document.getElementById('contentPage');
+
+        // Zobrazení chybové zprávy, pokud je v URL
+        const error = urlParams.get('error');
+        if (error === 'invalid_token') {
+            alert('Invalid access code. Please check and try again.');
+        }
+
+        // Zobrazíme formuláře, protože se obsah zobrazuje na resources.html
+        if(accessForms) accessForms.style.display = 'grid'; 
+        if(contentPage) contentPage.style.display = 'none'; 
+    });
+</script>
+</body>
+</html>

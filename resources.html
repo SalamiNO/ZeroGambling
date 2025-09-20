@@ -1,0 +1,229 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Resources | Zero G</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Albert+Sans:wght@100;200;300;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body id="top">
+    <header class="site-header">
+        <div class="header-container">
+            <img src="images/logo.png" alt="Zerogambling Logo" class="logo">
+            <div class="tagline">PRIVATE RECOVERY. FOR THOSE WHO CAN'T AFFORD TO BE SEEN.</div>
+            
+            <div class="nav-wrapper">
+                <nav class="main-nav">
+                    <a href="index.html#top" class="nav-item">Home</a>
+                    <a href="index.html#protocol" class="nav-item">The Protocol Zero</a>
+                    <a href="index.html#about" class="nav-item">About</a>
+                    <a href="index.html#faq" class="nav-item">FAQ</a>
+                    <a href="access.html" class="nav-item active">Access</a>
+                    <span class="social-links">
+                        <a href="#"><img src="images/fb.png" alt="Facebook logo"></a>
+                        <a href="#"><img src="images/x.png" alt="X logo"></a>
+                        <a href="#"><img src="images/ig.png" alt="Instagram logo"></a>
+                    </span>
+                </nav>
+            </div>
+            
+        </div>
+    </header>
+
+    <main>
+        <div class="container" style="margin-top:40px;">
+            
+            <!-- Loading stav -->
+            <div class="access-page" id="loadingPage" style="display: block;">
+                <div class="access-section">
+                    <h1 class="access-title">Verifying Access...</h1>
+                    <div class="access-info">
+                        Please wait while we verify your token.
+                    </div>
+                </div>
+            </div>
+
+            <!-- Úspěšný přístup -->
+            <div class="access-page" id="contentPage" style="display: none;">
+                <div class="access-section">
+                    <h1 class="access-title">Your Private Resources</h1>
+                    <div class="resource-list" id="resourceList">
+                        </div>
+                    <div class="access-info">
+                        <strong>💡 Permanent Access URL:</strong><br>
+                        <span id="bookmarkUrl"></span>
+                    </div>
+                    <div class="access-buttons">
+                        <a href="index.html" class="access-btn secondary">
+                            Back to Home
+                        </a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Chybová stránka -->
+            <div class="access-page" id="errorPage" style="display: none;">
+                <div class="access-section">
+                    <h1 class="access-title">Access Denied</h1>
+                    <div class="access-error" id="errorMessage" style="display: block;">
+                        Invalid or missing access token. Please ensure you clicked the full link from your email.
+                    </div>
+                    <div class="access-buttons">
+                        <a href="access.html" class="access-btn primary">
+                            Get Access
+                        </a>
+                        <a href="index.html" class="access-btn secondary">
+                            Back to Home
+                        </a>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </main>
+
+    <footer class="site-footer">
+        <div class="divider"></div>
+        <div class="footer-content container">
+            <p class="copyright">Copyright © 2025 Anonymous Edition. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <script>
+        // Konfigurace zdrojů
+        const RESOURCES = {
+            manuals: [
+                { title: 'Protocol Zero - Fast Lane Edition', description: 'Quick path to immediate gambling problem resolution', url: 'https://drive.google.com/uc?export=download&id=1YRg9K227g3jyrzSUX0KjJhISijyuhl3N', viewUrl: 'https://drive.google.com/file/d/1YRg9K227g3jyrzSUX0KjJhISijyuhl3N/view', type: 'PDF' },
+                { title: 'Protocol Zero - Full Recovery OS', description: 'Complete operating system for full recovery', url: 'https://drive.google.com/uc?export=download&id=1bFE0tiLwMuIK-K-T01arJuoZhBMh0B70', viewUrl: 'https://drive.google.com/file/d/1bFE0tiLwMuIK-K-T01arJuoZhBMh0B70/view', type: 'PDF' }
+            ],
+            podcasts: [
+                { title: 'Protocol Zero - Fast Lane Edition', description: 'Audio version of Fast Lane Edition for on-the-go listening', url: 'https://drive.google.com/uc?export=download&id=1-MrhLyoafi1DhWb1i5wyxlRZQBT1HVKq', viewUrl: 'https://drive.google.com/file/d/1-MrhLyoafi1DhWb1i5wyxlRZQBT1HVKq/view', type: 'MP3' },
+                { title: 'Protocol Zero - Full Recovery Audio', description: 'Complete audio program for long-term recovery', url: 'https://drive.google.com/uc?export=download&id=1yI-dGB6ldsaq0Oi8TbadAhPoAPCD3z1F', viewUrl: 'https://drive.google.com/file/d/1yI-dGB6ldsaq0Oi8TbadAhPoAPCD3z1F/view', type: 'MP3' }
+            ],
+            virtualExpert: { 
+                title: 'Virtual Recovery Expert', 
+                description: 'AI-powered guidance and support available 24/7', 
+                chatUrl: 'chat.html',
+                available: true 
+            }
+        };
+
+        // Funkce pro zobrazení konkrétní stránky (Content, Error, Loading)
+        function showPage(pageId) {
+            document.querySelectorAll('.access-page').forEach(page => {
+                page.style.display = 'none';
+                page.classList.remove('active');
+            });
+
+            const page = document.getElementById(pageId);
+            if (page) {
+                page.style.display = 'block';
+                page.classList.add('active');
+            }
+        }
+
+        // Funkce pro načtení zdrojů - 3-SLOUPCOVÝ LAYOUT
+        function loadResources(token) {
+            const resourceList = document.getElementById('resourceList');
+            resourceList.innerHTML = ''; 
+
+            const columnsContainer = document.createElement('div');
+            columnsContainer.className = 'resources-columns';
+
+            // SLOUPEC 1: Manuály
+            const manualsColumn = document.createElement('div');
+            manualsColumn.className = 'resource-column';
+            manualsColumn.innerHTML = `<div class="column-header"> <h3>📚 Manuals</h3> <p>Complete recovery guides</p> </div>`;
+            RESOURCES.manuals.forEach(manual => {
+                const manualDiv = document.createElement('div');
+                manualDiv.className = 'resource-card';
+                manualDiv.innerHTML = `<h4>${manual.title}</h4> <p>${manual.description}</p> <div class="resource-actions"> <a href="${manual.url}" target="_blank" class="resource-btn download">Download ${manual.type}</a> <a href="${manual.viewUrl}" target="_blank" class="resource-btn view">View Online</a> </div>`;
+                manualsColumn.appendChild(manualDiv);
+            });
+
+            // SLOUPEC 2: Virtual Expert
+            const expertColumn = document.createElement('div');
+            expertColumn.className = 'resource-column expert-column';
+            expertColumn.innerHTML = `<div class="column-header"> <h3>🤖 Virtual Expert</h3> <p>AI-powered recovery support</p> </div> <div class="resource-card expert-card"> <div class="expert-icon">🧠</div> <h4>${RESOURCES.virtualExpert.title}</h4> <p>${RESOURCES.virtualExpert.description}</p> <div class="expert-status"> <span class="status-indicator ${RESOURCES.virtualExpert.available ? 'online' : 'offline'}"></span> ${RESOURCES.virtualExpert.available ? 'Available Now' : 'Currently Offline'} </div> <div class="resource-actions"> <a href="${RESOURCES.virtualExpert.chatUrl}" target="_blank" class="resource-btn expert">Go to Chat</a> </div> </div>`;
+
+            // SLOUPEC 3: Podcasty
+            const podcastsColumn = document.createElement('div');
+            podcastsColumn.className = 'resource-column';
+            podcastsColumn.innerHTML = `<div class="column-header"> <h3>🎧 Podcasts</h3> <p>Audio recovery programs</p> </div>`;
+            RESOURCES.podcasts.forEach(podcast => {
+                const podcastDiv = document.createElement('div');
+                podcastDiv.className = 'resource-card';
+                podcastDiv.innerHTML = `<h4>${podcast.title}</h4> <p>${podcast.description}</p> <div class="resource-actions"> <a href="${podcast.url}" target="_blank" class="resource-btn download">Download ${podcast.type}</a> <a href="${podcast.viewUrl}" target="_blank" class="resource-btn view">Listen Online</a> </div>`;
+                podcastsColumn.appendChild(podcastDiv);
+            });
+
+            columnsContainer.appendChild(manualsColumn);
+            columnsContainer.appendChild(expertColumn);
+            columnsContainer.appendChild(podcastsColumn);
+            resourceList.appendChild(columnsContainer);
+        }
+        
+        // --- INICIALIZACE A KONTROLA TOKENU ---
+        
+        async function initializeAccess() {
+            const urlParams = new URLSearchParams(window.location.search);
+            const token = urlParams.get('token');
+
+            // Pokud token chybí v URL, zobraz chybu
+            if (!token) {
+                showPage('errorPage');
+                return;
+            }
+
+            try {
+                // Zobraz loading stav
+                showPage('loadingPage');
+
+                // Ověř token na backendu
+                const verifyUrl = `http://localhost:4000/verify/${token}`;
+                const response = await fetch(verifyUrl);
+                const data = await response.json();
+
+                if (response.ok && data.valid) {
+                    // Token je platný - zobraz obsah
+                    loadResources(token);
+                    
+                    const bookmarkUrl = window.location.origin + window.location.pathname + '?token=' + encodeURIComponent(token);
+                    document.getElementById('bookmarkUrl').textContent = bookmarkUrl;
+                    
+                    showPage('contentPage');
+                } else {
+                    // Token není platný - zobraz chybu
+                    showPage('errorPage');
+                }
+            } catch (error) {
+                console.error('Token verification failed:', error);
+                // Při chybě API také zobraz chybovou stránku
+                showPage('errorPage');
+            }
+        }
+
+        document.addEventListener('DOMContentLoaded', initializeAccess);
+        
+        // Scroll animation (ponecháno pro kompletnost)
+        function handleScrollAnimation() {
+            const zeroWord = document.getElementById('zero-word');
+            const protocolSection = document.getElementById('protocol');
+            
+            if (zeroWord && protocolSection) {
+                const sectionTop = protocolSection.offsetTop;
+                const scrollPosition = window.scrollY + window.innerHeight;
+                
+                if (scrollPosition > sectionTop + 100) {
+                    zeroWord.classList.add('animate-underline');
+                }
+            }
+        }
+        window.addEventListener('scroll', handleScrollAnimation);
+        document.addEventListener('DOMContentLoaded', handleScrollAnimation);
+    </script>
+</body>
+</html>
