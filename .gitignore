@@ -137,3 +137,7 @@ dist
 # Vite logs files
 vite.config.js.timestamp-*
 vite.config.ts.timestamp-*
+
+# === Doplnění pro ZeroGambling projekt ===
+# Soubor s daty o platbách, aby neunikly záznamy transakcí
+payments.json
