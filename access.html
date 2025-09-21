@@ -166,13 +166,13 @@
 
       try {
           // Krok 1: Asynchronní ověření tokenu na API (port 4000)
-          const verifyUrl = `http://localhost:4000/verify/${token}`; 
+          const verifyUrl = `https://zerogambling-back.onrender.com/verify/${token}`; // <--- ZMĚNA ZDE! 
           const resp = await fetch(verifyUrl);
           const data = await resp.json();
 
           if (resp.ok && data.valid) {
               // Krok 2: Token je platný. Přesměrujeme na resources (bez .html)
-              const redirectUrl = `http://localhost:56962/resources?token=${encodeURIComponent(token)}`;
+              const redirectUrl = `https://zerogambling.com/resources?token=${encodeURIComponent(token)}`; // <--- ZMĚNA ZDE!
               console.log('Přesměrovuji na:', redirectUrl);
               window.location.href = redirectUrl;
           } else {
@@ -198,7 +198,7 @@
       }
 
       try {
-        const resp = await fetch("http://localhost:4000/create", {
+        const resp = await fetch("https://zerogambling-back.onrender.com/create", { // <--- ZMĚNA ZDE!
           method: "POST",
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify({ email })

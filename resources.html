@@ -183,7 +183,7 @@
                 showPage('loadingPage');
 
                 // Ověř token na backendu
-                const verifyUrl = `http://localhost:4000/verify/${token}`;
+                const verifyUrl = `https://zerogambling-back.onrender.com/verify/${token}`; // <--- OPRAVA ZDE
                 const response = await fetch(verifyUrl);
                 const data = await response.json();
 
