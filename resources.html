@@ -17,11 +17,11 @@
             
             <div class="nav-wrapper">
                 <nav class="main-nav">
-                    <a href="index.html#top" class="nav-item">Home</a>
-                    <a href="index.html#protocol" class="nav-item">The Protocol Zero</a>
-                    <a href="index.html#about" class="nav-item">About</a>
-                    <a href="index.html#faq" class="nav-item">FAQ</a>
-                    <a href="access" class="nav-item active">Access</a>
+                    <a href="#" onclick="navigateTo('Home')" class="nav-item">Home</a>
+                    <a href="#" onclick="navigateTo('Protocol')" class="nav-item">The Protocol Zero</a>
+                    <a href="#" onclick="navigateTo('HowItWorks')" class="nav-item">How it works</a>
+                    <a href="#" onclick="navigateTo('FAQ')" class="nav-item">FAQ</a>
+                    <a href="access" class="nav-item">Access</a>
                     <span class="social-links">
                         <a href="#"><img src="images/fb.png" alt="Facebook logo"></a>
                         <a href="#"><img src="images/x.png" alt="X logo"></a>
@@ -224,6 +224,15 @@
         }
         window.addEventListener('scroll', handleScrollAnimation);
         document.addEventListener('DOMContentLoaded', handleScrollAnimation);
+
+        // Navigation function
+        function navigateTo(section) {
+            if (window.location.pathname !== '/' && window.location.pathname !== '/index.html') {
+                window.location.href = '/#' + section;
+            } else {
+                document.getElementById(section).scrollIntoView({ behavior: 'smooth' });
+            }
+        }
     </script>
 </body>
 </html>
