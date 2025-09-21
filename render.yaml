@@ -1,0 +1,15 @@
+headers:
+  - path: "*.html"
+    headers:
+      Cache-Control: public, max-age=600
+
+# Pravidla pro přepisování URL
+# Řekne Renderu, že pokud uživatel požádá o /access, má interně
+# zobrazit soubor /access.html
+redirects:
+  - from: /access
+    to: /access.html
+  - from: /resources
+    to: /resources.html
+  - from: /chat
+    to: /chat.html
